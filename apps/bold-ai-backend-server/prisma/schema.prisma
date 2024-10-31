@@ -1,0 +1,53 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model MarketplaceEntry {
+  createdAt   DateTime                         @default(now())
+  id          String                           @id @default(cuid())
+  price       Float?
+  rating      Int?
+  serviceType EnumMarketplaceEntryServiceType?
+  updatedAt   DateTime                         @updatedAt
+}
+
+model AiAgent {
+  aiType      String?
+  createdAt   DateTime @default(now())
+  id          String   @id @default(cuid())
+  interaction Json?
+  role        String?
+  updatedAt   DateTime @updatedAt
+}
+
+model DashboardData {
+  campaignPerformanceData     Json?
+  createdAt                   DateTime @default(now())
+  generatedInsights           String?
+  id                          String   @id @default(cuid())
+  optimizationRecommendations String?
+  updatedAt                   DateTime @updatedAt
+}
+
+model User {
+  businessType            String?
+  connectedAccountDetails Json?
+  createdAt               DateTime @default(now())
+  email                   String?  @unique
+  firstName               String?
+  id                      String   @id @default(cuid())
+  lastName                String?
+  password                String
+  roles                   Json
+  updatedAt               DateTime @updatedAt
+  username                String   @unique
+}
+
+enum EnumMarketplaceEntryServiceType {
+  Option1
+}
